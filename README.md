@@ -2,8 +2,8 @@
 
 ```R
 ## make sure required packages are installed and loaded
-source("code/requiredPackages.R")
-source("code/functions-fitting-data.R")
+source("../code/requiredPackages.R")
+source("../code/functions-fitting-data.R")
 ```
 
     Loading required package: jsonlite
@@ -15,14 +15,14 @@ source("code/functions-fitting-data.R")
 ```R
 ## load the ACTIVE dataset. First time it gets loaded from the JSON format and duplicated into an R binary file (way faster to load, less memory consumption)
 ## check if the binary exists
-if ( !file.exists("data/active-dataset.dat")) {
+if ( !file.exists("../data/active-dataset.dat")) {
   print("--> Loading the ACTIVE dataset from JSON format... might take a while!")
-  dataset <- fromJSON(txt = "data/active-dataset.json.bz2", flatten = T)
+  dataset <- fromJSON(txt = "../data/active-dataset.json.bz2", flatten = T)
   ## save repeating the lengthy loading process, by saving the "dataset" data.frame into a R binary file.
-  save(dataset, file = "data/active-dataset.dat", compress = "bzip2")
+  save(dataset, file = "../data/active-dataset.dat", compress = "bzip2")
 } else {
   print("--> Loading the ACTIVE dataset from DAT format...")
-  load("data/active-dataset.dat")
+  load("../data/active-dataset.dat")
 }
 ```
 
@@ -91,7 +91,7 @@ legend("topleft", legend = c("#views", "#shares"), col = c("black", "red"), lty 
 ```
 
 
-![png](HIP-fitting-usage_files/HIP-fitting-usage_3_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_3_0.png)
 
 
 
@@ -187,7 +187,7 @@ legend("topleft", legend = c("#views", "HIP fit", "#shares"), col = c("black", "
 ```
 
 
-![png](HIP-fitting-usage_files/HIP-fitting-usage_6_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_6_0.png)
 
 
 
@@ -225,5 +225,5 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"), co
 ```
 
 
-![png](HIP-fitting-usage_files/HIP-fitting-usage_8_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_8_0.png)
 
