@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "## run only once, to install the required packages to run kupyter notebook with an R kernel.\n\ninstall.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'), repos=\"https://cran.rstudio.com\")\ndevtools::install_github('IRkernel/IRkernel')\nIRkernel::installspec()",
+    "created" : 1490930040160.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "460996219",
+    "id" : "6DC0CE25",
+    "lastKnownWriteTime" : 1490930115,
+    "last_content_update" : 1490930115007,
+    "path" : "~/Work/Articole/Publicatii/2015.03 HIP in WWW/github-code-data-repo/code/install-R-jupyter-kernel.R",
+    "project_path" : "install-R-jupyter-kernel.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "requiredPackages <- c(\"jsonlite\", \"pracma\", \"nloptr\")\nfor (name in requiredPackages) {\n  if (!require(name, character.only = TRUE)) {\n    install.packages(name, repos=\"https://cran.rstudio.com\")\n  }\n}\n\n## remove temp vars\nrm(name, requiredPackages)\n",
+    "created" : 1490920223802.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4022671006",
+    "id" : "6882528A",
+    "lastKnownWriteTime" : 1490837104,
+    "last_content_update" : 1490837104,
+    "path" : "~/Work/Articole/Publicatii/2015.03 HIP in WWW/github-code-data-repo/code/requiredPackages.R",
+    "project_path" : "requiredPackages.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
