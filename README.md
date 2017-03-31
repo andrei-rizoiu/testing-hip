@@ -1,4 +1,22 @@
 
+Expecting to be HIP: <br/> Hawkes Intensity Processes for Social Media Popularity
+===
+
+This repository contains the ACTIVE twitted dataset and the code required for fitting HIP to real data.
+Both dataset and code are distributed under the *GNU General Public License v3.0*, a copy of which is included in this repository. 
+This code was developed as a research prototype and it should be treated as such.
+It comes with no guarantees or support, however questions can be addressed to [Marian-Andrei@rizoiu.eu](mailto:Marian-Andrei@rizoiu.eu).
+
+Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P. (2017). 
+**Expecting to be HIP: Hawkes Intensity Processes for Social Media Popularity**. 
+In Proceedings of the *International Conference on World Wide Web 2017*, pp. 1-9. Perth, Australia.
+doi: [10.1145/3038912.3052650](http://doi.org/10.1145/3038912.3052650)
+
+[pdf from arXiv](https://arxiv.org/pdf/1602.06033.pdf)
+
+Using HIP and the ACTIVE dataset: a short tutorial
+===
+
 
 ```R
 ## make sure required packages are installed and loaded
@@ -91,7 +109,7 @@ legend("topleft", legend = c("#views", "#shares"), col = c("black", "red"), lty 
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_3_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_7_0.png)
 
 
 
@@ -187,7 +205,7 @@ legend("topleft", legend = c("#views", "HIP fit", "#shares"), col = c("black", "
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_6_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_10_0.png)
 
 
 
@@ -225,5 +243,5 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"), co
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_8_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_12_0.png)
 
