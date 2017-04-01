@@ -3,7 +3,7 @@ Expecting to be HIP: <br/> Hawkes Intensity Processes for Social Media Popularit
 ===
 
 This repository contains:
-- the ACTIVE twitted videos dataset;
+- [the ACTIVE twitted videos dataset];
 - the code required for fitting HIP to real data;
 - [Visualizer](#hip-visualiser-system)
 - a short tutorial on exploring the ACTIVE dataset and fitting HIP to data.
@@ -22,8 +22,7 @@ The visualiser can be publicly accessed by [following this link](http://130.56.2
 we would want to say this is an *interactive* visualization of plots in the paper, has additional visualizations on TED videos and VEVO musicians, allows users to add and compare their own videos. 
 [<img src="util/demo-screenshot.png">](http://130.56.253.177/)
 
-Using HIP and the ACTIVE dataset: a short tutorial
-===
+# Using HIP and the ACTIVE dataset: a short tutorial
 
 First load (and if required install) the libraries needed for HIP. 
 The file `code/functions-fitting-data.R` contains all functions for simulating and fitting.
@@ -39,6 +38,8 @@ source("code/functions-fitting-data.R")
     Loading required package: pracma
     Loading required package: nloptr
 
+
+## The ACTIVE dataset
 
 Load the ACTIVE dataset from the JSON format. Note that this requires more that 8GB of memory, due to the `jsonlite` library. In order to speed up the dataset loading for subsequent executions, after the first loading we create a R binary file. The binary file speeds up loading considerably.
 
@@ -143,8 +144,10 @@ legend("topleft", legend = c("#views", "#shares"), col = c("black", "red"), lty 
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_16_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_17_0.png)
 
+
+## Fitting HIP
 
 The next step is to fit the parameters of the HIP model to the above video, based on the views and shares series during its first 90 days after upload.
 Views serves as the observed popularity, while shares is the exogeneous stimuli.
@@ -261,8 +264,10 @@ legend("topleft", legend = c("#views", "HIP fit", "#shares"),
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_24_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_26_0.png)
 
+
+## Forecasting with HIP
 
 Following the experimental protocol in the paper, we use HIP to forecast the popularity series between days 91 and 120. We add this forecast to the previously constructed graph.
 
@@ -302,7 +307,7 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"),
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_26_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_29_0.png)
 
 
 License
