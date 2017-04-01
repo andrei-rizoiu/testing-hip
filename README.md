@@ -2,11 +2,12 @@
 Expecting to be HIP: <br/> Hawkes Intensity Processes for Social Media Popularity
 ===
 
-This repository contains the ACTIVE twitted dataset and the code required for fitting HIP to real data.
-Both dataset and code are distributed under the *GNU General Public License v3.0*, a copy of which is included in this repository. 
-This code was developed as a research prototype and it should be treated as such.
-It comes with no guarantees or support, however questions can be addressed to [Marian-Andrei@rizoiu.eu](mailto:Marian-Andrei@rizoiu.eu).
+This repository contains:
+- the ACTIVE twitted videos dataset;
+- the code required for fitting HIP to real data;
+- a short tutorial on exploring the ACTIVE dataset and fitting HIP to data.
 
+*Referece*:  
 Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P. (2017). 
 **Expecting to be HIP: Hawkes Intensity Processes for Social Media Popularity**. 
 In Proceedings of the *International Conference on World Wide Web 2017*, pp. 1-9. Perth, Australia.
@@ -14,14 +15,22 @@ doi: [10.1145/3038912.3052650](http://doi.org/10.1145/3038912.3052650)
 
 [pdf from arXiv](https://arxiv.org/pdf/1602.06033.pdf)
 
+HIP visualiser system
+===
+The visualiser can be publicly accessed by [following this link](http://130.56.253.177/).
+[<img src="util/demo-screenshot.png">](http://130.56.253.177/)
+
 Using HIP and the ACTIVE dataset: a short tutorial
 ===
+
+First load (and if required install) the libraries needed for HIP. 
+The file `code/functions-fitting-data.R` contains all functions for simulating and fitting.
 
 
 ```R
 ## make sure required packages are installed and loaded
-source("../code/requiredPackages.R")
-source("../code/functions-fitting-data.R")
+source("code/requiredPackages.R")
+source("code/functions-fitting-data.R")
 ```
 
     Loading required package: jsonlite
@@ -29,31 +38,36 @@ source("../code/functions-fitting-data.R")
     Loading required package: nloptr
 
 
+Load the ACTIVE dataset from the JSON format. Note that this requires more that 8GB of memory, due to the `jsonlite` library. In order to speed up the dataset loading for subsequent executions, after the first loading we create a R binary file. The binary file speeds up loading considerably.
+
 
 ```R
 ## load the ACTIVE dataset. First time it gets loaded from the JSON format and duplicated into an R binary file (way faster to load, less memory consumption)
 ## check if the binary exists
-if ( !file.exists("../data/active-dataset.dat")) {
+if ( !file.exists("data/active-dataset.dat")) {
   print("--> Loading the ACTIVE dataset from JSON format... might take a while!")
-  dataset <- fromJSON(txt = "../data/active-dataset.json.bz2", flatten = T)
+  dataset <- fromJSON(txt = "data/active-dataset.json.bz2", flatten = T)
   ## save repeating the lengthy loading process, by saving the "dataset" data.frame into a R binary file.
-  save(dataset, file = "../data/active-dataset.dat", compress = "bzip2")
+  save(dataset, file = "data/active-dataset.dat", compress = "bzip2")
 } else {
   print("--> Loading the ACTIVE dataset from DAT format...")
-  load("../data/active-dataset.dat")
+  load("data/active-dataset.dat")
 }
 ```
 
     [1] "--> Loading the ACTIVE dataset from DAT format..."
 
 
+Explore the content of the dataset. 
+Each line is coresponds to a video. 
+Columns correpond to the different information available for each video, such as video *title*, author (entitle here *channelTitle*), *uploadDate* etc.
+HIP requires the series of views (*dailyViewcount*) as observed popularity and of shares (*numShare*) or tweets (*dailyTweets*) as exogenous stimuli.
+Note that metadata information is not available for all videos.
+
 
 ```R
 ## let's explore what information we have available for each video
 print(names(dataset))
-
-## and some samples of videos
-dataset[1, names(dataset)[! names(dataset) %in% c("numTweet", "watchTime", "numSubscriber")]]
 ```
 
      [1] "YoutubeID"                 "numTweet"                 
@@ -70,6 +84,14 @@ dataset[1, names(dataset)[! names(dataset) %in% c("numTweet", "watchTime", "numS
     [23] "totalTweet"                "dailyTweets"              
 
 
+We can extract the information related to a single video, and print it for inspection.
+
+
+```R
+## information about the first video in the dataset. For display reasons we exclude some fields.
+dataset[1, names(dataset)[! names(dataset) %in% c("numTweet", "watchTime", "numSubscriber")]]
+```
+
 
 <table>
 <thead><tr><th scope=col>YoutubeID</th><th scope=col>numShare</th><th scope=col>dailyViewcount</th><th scope=col>description</th><th scope=col>title</th><th scope=col>channelId</th><th scope=col>channelTitle</th><th scope=col>category</th><th scope=col>uploadDate</th><th scope=col>duration</th><th scope=col>⋯</th><th scope=col>dimension</th><th scope=col>caption</th><th scope=col>regionRestriction.blocked</th><th scope=col>regionRestriction.allowed</th><th scope=col>topicIds</th><th scope=col>relevantTopicIds</th><th scope=col>totalShare</th><th scope=col>totalViewcount</th><th scope=col>totalTweet</th><th scope=col>dailyTweets</th></tr></thead>
@@ -81,14 +103,22 @@ The Osteen video was already out before I did the added clip of Bill Cosby.     
 
 
 
+Next, we select the views and shares series for the video **bUORBT9iFKc** presented in the paper, in Fig. 2a.
+
 
 ```R
 ## let's get the #views and #shares series for a video
-vidID <- which(dataset$YoutubeID == "bUORBT9iFKc") # other candidates from the paper: "WKJoBeeSWhc", "bUORBT9iFKc"
-vidYT <- dataset$YoutubeID[[vidID]]
+vidYT <- "bUORBT9iFKc"
+vidID <- which(dataset$YoutubeID == vidYT)
+
 views <- dataset$dailyViewcount[[vidID]]
 shares <- dataset$numShare[[vidID]]
+```
 
+We plot the two series on the same graph, on different y axes.
+
+
+```R
 ## and plot how this looks like
 dates <- as.Date(dataset$uploadDate[[vidID]]) + 1:length(views) - 1 
 plot(dates, views, type = "l", lty = 2, xaxt = "n",
@@ -109,8 +139,13 @@ legend("topleft", legend = c("#views", "#shares"), col = c("black", "red"), lty 
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_7_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_16_0.png)
 
+
+The next step is to fit the parameters of the HIP model to the above video, based on the views and shares series during its first 90 days after upload.
+Views serves as the observed popularity, while shares is the exogeneous stimuli.
+The initial parameters can be set manualy (see the function definition), however in this example we let them by default.
+Note that fitting HIP can take a while.
 
 
 ```R
@@ -123,11 +158,26 @@ fitted_params <- fit_series(data_series = views[1:90], ext_infl = list(shares = 
 options(warn = oldw)
 ```
 
+Let us explore the fitted parameters. Note that both parameters K and beta are present, however beta is fixed at 0.1 using the bouds in the fitting.
+This is because HIP boundles together these two parameters into the parameter C, as defined in Theorem 2.1 in the paper.
+
 
 ```R
 ## print HIP fitted parameters
 print(fitted_params$model$par)
+```
 
+          gamma         eta           K        beta           c       theta 
+     917.385494 5042.948836    6.777116    0.100000   10.557258    1.166210 
+            mu1 
+     129.117840 
+
+
+Using the fitted parameters and the external stimuli series (shares), we can simulate the popularity series for the first 90 days.
+This is useful for evaluating how well did HIP fit the data:
+
+
+```R
 ## based on the fitted parameters, use HIP to generate a fitted series
 fitted_counts <- generate_simulated_data(params = fitted_params$model$par, time = 89, ext_infl = list(shares = shares[1:90]) )$Count
 
@@ -135,10 +185,6 @@ fitted_counts <- generate_simulated_data(params = fitted_params$model$par, time 
 print(rbind(observed = views[1:90], HIP = fitted_counts))
 ```
 
-          gamma         eta           K        beta           c       theta 
-     917.385494 5042.948836    6.777116    0.100000   10.557258    1.166210 
-            mu1 
-     129.117840 
                  [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
     observed 7903.000  9842.00 9985.000 8687.000 6902.000 4709.000 5846.000
     HIP      7889.749 10503.29 8782.314 9267.092 9350.889 7859.724 7450.864
@@ -180,6 +226,8 @@ print(rbind(observed = views[1:90], HIP = fitted_counts))
     HIP      12178.58
 
 
+Furthermore, we can add the fitted popularity series to the previously constructed graph. Note the tight fit between observed and fitted popularity.
+
 
 ```R
 ## replot the same thing as above (#views and #shares), but restrict to the first 90 days and add the fitted series on top
@@ -205,18 +253,16 @@ legend("topleft", legend = c("#views", "HIP fit", "#shares"), col = c("black", "
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_10_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_24_0.png)
 
+
+Following the experimental protocol in the paper, we use HIP to forecast the popularity series between days 91 and 120. We add this forecast to the previously constructed graph.
 
 
 ```R
 # using HIP and its fitted parameters, get the popularity series from 91 days to 120 days
 ## note that the generate_simulate_data function counts days from 0, so the 120th day is day 119.
 forecasted_counts <- generate_simulated_data(params = fitted_params$model$par, time = 119, ext_infl = list(shares = shares[1:120]), prefix = views[1:90] )$Count[91:120]
-```
-
-
-```R
 
 ## plot again the previous graph, extending the time horizon to 1-120 days and adding the forecast
 dates <- as.Date(dataset$uploadDate[[vidID]]) + 1:length(views) - 1 
@@ -243,5 +289,12 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"), co
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_12_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_26_0.png)
 
+
+License
+===
+
+Both dataset and code are distributed under the *GNU General Public License v3.0*, a copy of which is included in this repository. 
+This code was developed as a research prototype and it should be treated as such.
+It comes with no guarantees or support, however questions can be addressed to [Marian-Andrei@rizoiu.eu](mailto:Marian-Andrei@rizoiu.eu).
