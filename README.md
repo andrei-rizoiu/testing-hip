@@ -5,7 +5,7 @@ Expecting to be HIP: <br/> Hawkes Intensity Processes for Social Media Popularit
 This repository contains:
 - the ACTIVE twitted videos dataset;
 - the code required for fitting HIP to real data;
-- [Visualizer](#HIP-visualiser-system)
+- [Visualizer](#hip-visualiser-system)
 - a short tutorial on exploring the ACTIVE dataset and fitting HIP to data.
 
 *Referece*:  
