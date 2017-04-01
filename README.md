@@ -5,6 +5,7 @@ Expecting to be HIP: <br/> Hawkes Intensity Processes for Social Media Popularit
 This repository contains:
 - the ACTIVE twitted videos dataset;
 - the code required for fitting HIP to real data;
+- [Visualizer](#HIP-visualiser-system)
 - a short tutorial on exploring the ACTIVE dataset and fitting HIP to data.
 
 *Referece*:  
@@ -13,11 +14,12 @@ Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P. (2
 In Proceedings of the *International Conference on World Wide Web 2017*, pp. 1-9. Perth, Australia.
 doi: [10.1145/3038912.3052650](http://doi.org/10.1145/3038912.3052650)
 
-[pdf from arXiv](https://arxiv.org/pdf/1602.06033.pdf)
+[pdf at arxiv with supplementary material](https://arxiv.org/pdf/1602.06033.pdf)
 
 HIP visualiser system
 ===
-The visualiser can be publicly accessed by [following this link](http://130.56.253.177/).
+The visualiser can be publicly accessed by [following this link](http://130.56.253.177/) or by clicking on its thumbnail below.
+we would want to say this is an *interactive* visualization of plots in the paper, has additional visualizations on TED videos and VEVO musicians, allows users to add and compare their own videos. 
 [<img src="util/demo-screenshot.png">](http://130.56.253.177/)
 
 Using HIP and the ACTIVE dataset: a short tutorial
@@ -42,7 +44,8 @@ Load the ACTIVE dataset from the JSON format. Note that this requires more that 
 
 
 ```R
-## load the ACTIVE dataset. First time it gets loaded from the JSON format and duplicated into an R binary file (way faster to load, less memory consumption)
+## load the ACTIVE dataset. First time it gets loaded from the JSON format and duplicated 
+## into an R binary file (way faster to load, less memory consumption)
 ## check if the binary exists
 if ( !file.exists("data/active-dataset.dat")) {
   print("--> Loading the ACTIVE dataset from JSON format... might take a while!")
@@ -305,6 +308,10 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"),
 License
 ===
 
-Both dataset and code are distributed under the *GNU General Public License v3.0*, a copy of which is included in this repository. 
-This code was developed as a research prototype and it should be treated as such.
-It comes with no guarantees or support, however questions can be addressed to [Marian-Andrei@rizoiu.eu](mailto:Marian-Andrei@rizoiu.eu).
+Both dataset and code are distributed under the *Creative Commons Attribution-NonCommercial 4.0 International* (CC BY-NC 4.0) license, a copy of which can be obtained [following this link](https://creativecommons.org/licenses/by-nc/4.0/legalcode). 
+If you require a different license, please contact us at [Marian-Andrei@rizoiu.eu](mailto:Marian-Andrei@rizoiu.eu) or [Lexing.Xie@anu.edu.au](mailto:Lexing.Xie@anu.edu.au).
+
+
+```R
+
+```
