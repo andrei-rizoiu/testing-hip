@@ -122,7 +122,8 @@ We plot the two series on the same graph, on different y axes.
 ## and plot how this looks like
 dates <- as.Date(dataset$uploadDate[[vidID]]) + 1:length(views) - 1 
 plot(dates, views, type = "l", lty = 2, xaxt = "n",
-     xlab = "", ylab = "#views", main = sprintf("Popularity and exo series for video '%s'", dataset$YoutubeID[[vidID]] ))
+     xlab = "", ylab = "#views", 
+     main = sprintf("Popularity and exo series for video '%s'", dataset$YoutubeID[[vidID]] ))
 axis(1, at=dates[seq(from = 1, to = length(views), by = 14)], cex.axis = 1,
      labels=dates[seq(from = 1, to = length(views), by = 14)])
 # and now the external influence on another axis
@@ -151,7 +152,8 @@ Note that fitting HIP can take a while.
 ```R
 oldw <- getOption("warn")
 options(warn = -1)
-## We fit the parameters of the HIP model on the first 90 days of video life. Use the extracted #shares during the same period of 1-90 days as external influence.
+## We fit the parameters of the HIP model on the first 90 days of video life. 
+## Use the extracted #shares during the same period of 1-90 days as external influence.
 fitted_params <- fit_series(data_series = views[1:90], ext_infl = list(shares = shares[1:90]),
                             lowerBound = c(gamma = 0, eta = 0, K = 0, beta = 0.1, c = -Inf, theta = 0, mu1 = 0),
                             upperBound = c(gamma = Inf, eta = Inf, K = Inf, beta = 0.1, c = Inf, theta = Inf, mu1 = Inf) )
@@ -179,7 +181,8 @@ This is useful for evaluating how well did HIP fit the data:
 
 ```R
 ## based on the fitted parameters, use HIP to generate a fitted series
-fitted_counts <- generate_simulated_data(params = fitted_params$model$par, time = 89, ext_infl = list(shares = shares[1:90]) )$Count
+fitted_counts <- generate_simulated_data(params = fitted_params$model$par, time = 89, 
+                                         ext_infl = list(shares = shares[1:90]) )$Count
 
 ## print the real and the HIP fitted popularity series side-by-side
 print(rbind(observed = views[1:90], HIP = fitted_counts))
@@ -230,11 +233,12 @@ Furthermore, we can add the fitted popularity series to the previously construct
 
 
 ```R
-## replot the same thing as above (#views and #shares), but restrict to the first 90 days and add the fitted series on top
-## and plot how this looks like
+## replot the same thing as above (#views and #shares), but restrict to the first 90 days 
+## and add the fitted series on top
 dates <- as.Date(dataset$uploadDate[[vidID]]) + 1:length(views) - 1 
 plot(dates[1:90], views[1:90], type = "l", lty = 2, xaxt = "n",
-     xlab = "", ylab = "#views", main = sprintf("Popularity and exo series for video '%s'", dataset$YoutubeID[[vidID]] ))
+     xlab = "", ylab = "#views", 
+     main = sprintf("Popularity and exo series for video '%s'", dataset$YoutubeID[[vidID]] ))
 lines(x = dates[1:90], y = fitted_counts, col = "blue", lty = 1)
 
 axis(1, at=dates[seq(from = 1, to = length(views), by = 14)], cex.axis = 1,
@@ -249,7 +253,8 @@ plot(x = dates[1:90], y = shares[1:90], type="l", col="red", ylim = y_limit,
 axis(4, cex.main = 1.5, cex.axis = 1, cex.lab = 1.5, 
      at = round(seq(from = range(shares)[1], to = range(shares)[2], 
                     length.out = 6)) )
-legend("topleft", legend = c("#views", "HIP fit", "#shares"), col = c("black", "blue", "red"), lty = c(2, 1, 1), bty = "n")
+legend("topleft", legend = c("#views", "HIP fit", "#shares"), 
+       col = c("black", "blue", "red"), lty = c(2, 1, 1), bty = "n")
 ```
 
 
@@ -262,12 +267,16 @@ Following the experimental protocol in the paper, we use HIP to forecast the pop
 ```R
 # using HIP and its fitted parameters, get the popularity series from 91 days to 120 days
 ## note that the generate_simulate_data function counts days from 0, so the 120th day is day 119.
-forecasted_counts <- generate_simulated_data(params = fitted_params$model$par, time = 119, ext_infl = list(shares = shares[1:120]), prefix = views[1:90] )$Count[91:120]
+forecasted_counts <- generate_simulated_data(params = fitted_params$model$par, 
+                                             time = 119, 
+                                             ext_infl = list(shares = shares[1:120]), 
+                                             prefix = views[1:90] )$Count[91:120]
 
 ## plot again the previous graph, extending the time horizon to 1-120 days and adding the forecast
 dates <- as.Date(dataset$uploadDate[[vidID]]) + 1:length(views) - 1 
 plot(dates[1:120], views[1:120], type = "l", lty = 2, xaxt = "n",
-     xlab = "", ylab = "#views", main = sprintf("Popularity and exo series for video '%s'", dataset$YoutubeID[[vidID]] ))
+     xlab = "", ylab = "#views", 
+     main = sprintf("Popularity and exo series for video '%s'", dataset$YoutubeID[[vidID]] ))
 lines(x = dates[1:120], y = c(fitted_counts, rep(x = NA, times = 30)), col = "blue", lty = 1)
 abline(v = dates[90], col = "gray60", lty = 2) ##separate training and forecasting with a vertical line
 lines(x = dates[1:120], y = c(rep(x = NA, times = 90), forecasted_counts), col = "darkmagenta", lty = 1)
@@ -284,7 +293,8 @@ plot(x = dates[1:90], y = shares[1:90], type="l", col="red", ylim = y_limit,
 axis(4, cex.main = 1.5, cex.axis = 1, cex.lab = 1.5, 
      at = round(seq(from = range(shares)[1], to = range(shares)[2], 
                     length.out = 6)) )
-legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"), col = c("black", "blue", "darkmagenta", "red"), lty = c(2, 1, 1, 1), bty = "n")
+legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"), 
+       col = c("black", "blue", "darkmagenta", "red"), lty = c(2, 1, 1, 1), bty = "n")
 
 ```
 
