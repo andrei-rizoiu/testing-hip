@@ -3,10 +3,10 @@ Expecting to be HIP: <br/> Hawkes Intensity Processes for Social Media Popularit
 ===
 
 This repository contains:
-- [the ACTIVE twitted videos dataset](#the-active-dataset);
-- the code required for [fitting HIP to real data](#fitting-hip) and [forecasting future popularity with HIP](#forecasting-with-hip);
-- [Visualizer](#hip-visualiser-system)
-- a short tutorial on exploring the ACTIVE dataset and fitting HIP to data.
+- the link to [an interactive visualizer system](#hip-visualiser-system) for HIP;
+- [a short tutorial](#using-hip-and-the-active-dataset-a-short-tutorial) on exploring the ACTIVE dataset and fitting HIP to data;
+- the [ACTIVE twitted videos dataset](#the-active-dataset);
+- the code required for [fitting HIP to real data](#fitting-hip) and [forecasting future popularity with HIP](#forecasting-with-hip).
 
 *Referece*:  
 Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P. (2017). 
@@ -16,10 +16,13 @@ doi: [10.1145/3038912.3052650](http://doi.org/10.1145/3038912.3052650)
 
 [pdf at arxiv with supplementary material](https://arxiv.org/pdf/1602.06033.pdf)
 
-HIP visualiser system
-===
-The visualiser can be publicly accessed by [following this link](http://130.56.253.177/) or by clicking on its thumbnail below.
-we would want to say this is an *interactive* visualization of plots in the paper, has additional visualizations on TED videos and VEVO musicians, allows users to add and compare their own videos. 
+# HIP visualiser system
+This is an *interactive* visualization of the plots in the paper: the endo-exo map, observed and fitted popularity series and video metadata.
+It has additional visualizations of TED videos and VEVO musicians.
+Furthermore, it allows users to add and compare their own videos.
+
+**(access the visualizer by clicking on the thumbnail below)**
+
 [<img src="util/demo-screenshot.png">](http://130.56.253.177/)
 
 # Using HIP and the ACTIVE dataset: a short tutorial
